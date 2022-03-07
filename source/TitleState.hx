@@ -234,6 +234,7 @@ class TitleState extends MusicBeatState
 
 			if(FlxG.sound.music == null) {
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 
 			}
 		}
