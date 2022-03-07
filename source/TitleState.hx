@@ -231,10 +231,22 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
+			#if PRELOAD_ALL
+			var songlist = Assets.getLibrary('songs').list("MUSIC").filter(song -> song.endsWith("Inst.ogg"));
+			for (i in 0...songlist.length)
+				songlist[i] = 'songs:${songlist[i]}';
+			songlist.push(Paths.music('freakyMenu'));
+			songlist.remove("songs:assets/songs/tutorial/Inst.ogg");
+			FlxG.sound.playMusic(FlxG.random.getObject(songlist), 0);
+			#else
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			#end
+
+			FlxG.sound.music.fadeIn(4, 0, 0.7);
+		}
 
 			if(FlxG.sound.music == null) {
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-				FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 
 			}
 		}
@@ -589,21 +601,21 @@ class TitleState extends MusicBeatState
 				case 6:
 					addMoreText(curWacky[1]);
 				// credTextShit.text += '\nlmao';
-				case 8:
+				case 7:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
-				case 9:
+				case 8:
 					addMoreText('Loaff');
 				// credTextShit.visible = true;
-				case 10:
+				case 9:
 					addMoreText('Kevin09');
 				// credTextShit.text += '\nNight';
-				case 11:
+				case 10:
 					addMoreText('Present'); // credTextShit.text += '\nFunkin';
 
-				case 12:
+				case 11:
 					skipIntro();
 			}
 		}
