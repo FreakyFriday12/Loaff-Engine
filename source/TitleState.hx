@@ -215,9 +215,9 @@ class TitleState extends MusicBeatState
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
 
-			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.BLACK, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
+			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, FlxColor.WHITE, 1, new FlxPoint(0, -1), {asset: diamond, width: 32, height: 32},
 				new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
-			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.BLACK, 0.7, new FlxPoint(0, 1),
+			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, FlxColor.WHITE, 0.7, new FlxPoint(0, 1),
 				{asset: diamond, width: 32, height: 32}, new FlxRect(-300, -300, FlxG.width * 1.8, FlxG.height * 1.8));
 				
 			transIn = FlxTransitionableState.defaultTransIn;
@@ -231,24 +231,18 @@ class TitleState extends MusicBeatState
 			// music.loadStream(Paths.music('freakyMenu'));
 			// FlxG.sound.list.add(music);
 			// music.play();
-			#if PRELOAD_ALL
-			var songlist = Assets.getLibrary('songs').list("MUSIC").filter(song -> song.endsWith("Inst.ogg"));
-			for (i in 0...songlist.length)
-				songlist[i] = 'songs:${songlist[i]}';
-			songlist.push(Paths.music('freakyMenu'));
-			songlist.remove("songs:assets/songs/tutorial/Inst.ogg");
-			FlxG.sound.playMusic(FlxG.random.getObject(songlist), 0);
-			#else
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-			#end
 
-			FlxG.sound.music.fadeIn(4, 0, 0.7);
+			if(FlxG.sound.music == null) {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+
+				FlxG.sound.music.fadeIn(4, 0, 0.7);
+			}
 		}
 
 		Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite(-50, -10).loadGraphic(Paths.image('menuTitle'));
+		var bg:FlxSprite = new FlxSprite(-50, -10).loadGraphic(Paths.image('menuBG'));
 		bg.scale.set(0.622, 0.622);
 		bg.updateHitbox();
 		bg.antialiasing = true;
@@ -352,7 +346,7 @@ class TitleState extends MusicBeatState
 		add(credGroup);
 		textGroup = new FlxGroup();
 
-		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.WHITE);
 		credGroup.add(blackScreen);
 
 		credTextShit = new Alphabet(0, 0, "", true);
@@ -582,7 +576,7 @@ class TitleState extends MusicBeatState
 					addMoreText('newgrounds', -40);
 					ngSpr.visible = true;
 				// credTextShit.text += '\nNewgrounds';
-				case 3:
+				case 2:
 					deleteCoolText();
 					ngSpr.visible = false;
 				// credTextShit.visible = false;
@@ -592,24 +586,24 @@ class TitleState extends MusicBeatState
 				case 4:
 					createCoolText([curWacky[0]]);
 				// credTextShit.visible = true;
-				case 6:
+				case 5:
 					addMoreText(curWacky[1]);
 				// credTextShit.text += '\nlmao';
-				case 7:
+				case 6:
 					deleteCoolText();
 				// credTextShit.visible = false;
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
-				case 8:
-					addMoreText('Loaff');
+				case 7:
+					addMoreText('Welcome');
 				// credTextShit.visible = true;
-				case 9:
-					addMoreText('Kevin09');
+				case 8:
+					addMoreText('To');
 				// credTextShit.text += '\nNight';
-				case 10:
-					addMoreText('Present'); // credTextShit.text += '\nFunkin';
+				case 9:
+					addMoreText('Loaff Engine'); // credTextShit.text += '\nFunkin';
 
-				case 11:
+				case 10:
 					skipIntro();
 			}
 		}
@@ -635,7 +629,7 @@ class TitleState extends MusicBeatState
 						FlxTween.angle(logoBl, logoBl.angle, -4.5, 4.5, {ease: FlxEase.quartInOut});
 				}, 0);
 
-			FlxG.camera.flash(FlxColor.BLACK, 4);
+			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			skippedIntro = true;
 		}
