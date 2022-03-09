@@ -242,7 +242,7 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(titleJSON.bpm);
 		persistentUpdate = true;
 
-		var bg:FlxSprite = new FlxSprite(-50, -10).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-50, -10).loadGraphic(Paths.image('menuTitle'));
 		bg.scale.set(0.622, 0.622);
 		bg.updateHitbox();
 		bg.antialiasing = true;
